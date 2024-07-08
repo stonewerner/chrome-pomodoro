@@ -1,5 +1,4 @@
-let timer;
-let isRunning = false;
+//let isRunning = false;
 
 document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('start-25').addEventListener('click', () => startTimer(25));
@@ -8,19 +7,31 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 function startTimer(minutes) {
-    if (isRunning) {
-        clearInterval(timer);
-    }
-    isRunning = true;
-    let time = minutes * 60;
-    displayTime(time);
+    //removed isRunning check
+    chrome.runtime.sendMessage({ type: 'clearTimer' }, (response) => {
+        console.log(response.status);
+    });
+    
+    //isRunning = true;
+    chrome.runtime.sendMessage({ type: 'startTimer', minutes: minutes }, (response) => {
+        if (response.status === 'timerStarted') {
+            startCountdown(minutes * 60);
+        } else {
+            console.error('Failed to start timer.');
+        }
+        //console.log(response.status);
+        //displayTime(minutes * 60);
+        //startCountdown(minutes * 60);
+    });
+}
 
-    timer = setInterval(() => {
+function startCountdown(duration) {
+    let time = duration;
+    const countdownInterval = setInterval(() => {
         time--;
         displayTime(time);
         if (time <= 0) {
-            clearInterval(timer);
-            isRunning = false;
+            clearInterval(countdownInterval);
             alert("Time's up!");
         }
     }, 1000);

@@ -2,6 +2,10 @@
     "name": "Pomodoro Study Timer",
     "version": "1.0.0",
     "description": "An extension to help you study!",
+    "permissions": ["alarms", "notifications"],
+    "background": {
+        "service_worker": "background.js"
+    },
     "manifest_version": 3,
     "author": "Stone Werner",
     "action": {
