@@ -1,0 +1,11 @@
+{
+    "name": "Pomodoro Study Timer",
+    "version": "1.0.0",
+    "description": "An extension to help you study!",
+    "manifest_version": 3,
+    "author": "Stone Werner",
+    "action": {
+        "default_popup": "index.html",
+        "default_title": "Pomodoro Study Timer"
+    }
+}
